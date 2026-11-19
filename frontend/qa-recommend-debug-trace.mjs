@@ -1,0 +1,3 @@
+export default async function run(page, ui) {
+  const before = await ui.snapshot(); const id = before.match(/@(e\d+) button "Enter workspace"/)?.[1]; await ui.click(id); await page.getByRole('heading', { name: /Good morning/i }).waitFor(); await page.getByRole('button', { name: 'Movement tracking' }).click(); await page.getByRole('heading', { name: /Where every asset/i }).waitFor(); const beforeRec = await ui.snapshot({ full: true }); const ai = page.getByRole('button', { name: /AI recommendations/ }); await ai.click(); await page.waitForTimeout(2000); return { beforeRec, after: await ui.snapshot({ full: true }), url: page.url(), aiCount: await ai.count() };
+}

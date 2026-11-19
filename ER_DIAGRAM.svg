@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1320" viewBox="0 0 1800 1320" role="img" aria-labelledby="title desc">
+  <title id="title">Smart ITAM ER Diagram</title>
+  <desc id="desc">MongoDB entities and their ObjectId and logical string relationships.</desc>
+  <defs>
+    <linearGradient id="bg" x2="0" y2="1"><stop stop-color="#f7fbff"/><stop offset="1" stop-color="#edf4fa"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#17334b" flood-opacity=".10"/></filter>
+    <style>
+      .title{font:700 34px Inter,Segoe UI,Arial,sans-serif;fill:#122b3a}.subtitle{font:15px Inter,Segoe UI,Arial,sans-serif;fill:#617889}
+      .card{fill:#fff;stroke:#d9e5ee;stroke-width:1.5;filter:url(#shadow)}.head{fill:#0d6575}.head2{fill:#244a6a}.entity{font:700 17px Inter,Segoe UI,Arial,sans-serif;fill:#fff;letter-spacing:.5px}
+      .field{font:13px Consolas,Monaco,monospace;fill:#294354}.key{font-weight:700;fill:#0b6575}.muted{fill:#718899}.line{fill:none;stroke:#347a8b;stroke-width:2.5}.logical{fill:none;stroke:#9a7a32;stroke-width:2;stroke-dasharray:7 6}.rel{font:12px Inter,Segoe UI,Arial,sans-serif;fill:#315568;paint-order:stroke;stroke:#f5f9fc;stroke-width:5px;stroke-linejoin:round}.badge{font:11px Inter,Segoe UI,Arial,sans-serif;fill:#41677a}
+    </style>
+    <marker id="dot" markerWidth="8" markerHeight="8" refX="4" refY="4"><circle cx="4" cy="4" r="3" fill="#347a8b"/></marker>
+  </defs>
+  <rect width="1800" height="1320" rx="24" fill="url(#bg)"/>
+  <text x="60" y="58" class="title">Smart ITAM · Entity Relationship Diagram</text>
+  <text x="60" y="86" class="subtitle">MongoDB / Mongoose schema · Solid lines = ObjectId refs · Dashed lines = string matches without enforced foreign keys</text>
+
+  <!-- Relationships are drawn first so entity cards remain legible. -->
+  <path class="line" d="M350 235 H470"/><text x="370" y="222" class="rel">borrower · optional</text>
+  <path class="line" d="M800 235 H910"/><text x="812" y="222" class="rel">one transaction</text>
+  <path class="line" d="M1260 235 H1380"/><text x="1270" y="222" class="rel">one asset</text>
+  <path class="line" d="M1420 455 V463 H480 V620"/><text x="965" y="458" class="rel">asset · required</text>
+  <path class="line" d="M520 425 V450 H40 V620 H60"/><text x="285" y="445" class="rel">transactionId · optional</text>
+  <path class="line" d="M1450 455 V465 H660 V475"/><text x="1030" y="461" class="rel">asset</text>
+  <path class="line" d="M1580 455 V468 H970 V475"/><text x="1195" y="464" class="rel">asset</text>
+  <path class="line" d="M1700 455 V470 H1320 V475"/><text x="1510" y="466" class="rel">asset</text>
+  <path class="line" d="M470 300 V425 H260 V475"/><text x="281" y="414" class="rel">user</text>
+  <path class="logical" d="M180 1040 V1075 H1530 V375"/><text x="745" y="1067" class="rel">assetGroup / prefix string match</text>
+
+  <!-- Core transaction flow -->
+  <g transform="translate(60 145)"><rect class="card" width="290" height="230" rx="13"/><path class="head" d="M13 0h264a13 13 0 0 1 13 13v37H0V13A13 13 0 0 1 13 0"/><text x="18" y="32" class="entity">USER</text>
+    <text x="18" y="78" class="field"><tspan class="key">_id</tspan><tspan> · ObjectId · PK</tspan></text><text x="18" y="105" class="field">name · email (unique)</text><text x="18" y="132" class="field">role · isActive</text><text x="18" y="159" class="field">department · string match</text><text x="18" y="200" class="badge">timestamps: createdAt, updatedAt</text></g>
+  <g transform="translate(470 145)"><rect class="card" width="330" height="280" rx="13"/><path class="head" d="M13 0h304a13 13 0 0 1 13 13v37H0V13A13 13 0 0 1 13 0"/><text x="18" y="32" class="entity">TRANSACTION</text>
+    <text x="18" y="78" class="field"><tspan class="key">_id</tspan><tspan> · ObjectId · PK</tspan></text><text x="18" y="105" class="field">transactionId · unique</text><text x="18" y="132" class="field">type · CHECKOUT / RETURN / MOVE</text><text x="18" y="159" class="field">borrower · ObjectId · FK · optional</text><text x="18" y="186" class="field">borrowerName · actor · status</text><text x="18" y="213" class="field">source · destination · dueDate</text><text x="18" y="240" class="field">assetCount · returnedCount</text><text x="18" y="264" class="badge">timestamps enabled</text></g>
+  <g transform="translate(910 145)"><rect class="card" width="350" height="245" rx="13"/><path class="head" d="M13 0h324a13 13 0 0 1 13 13v37H0V13A13 13 0 0 1 13 0"/><text x="18" y="32" class="entity">TRANSACTION_ITEM</text>
+    <text x="18" y="78" class="field"><tspan class="key">_id</tspan><tspan> · ObjectId · PK</tspan></text><text x="18" y="105" class="field">transaction · ObjectId · FK · required</text><text x="18" y="132" class="field">asset · ObjectId · FK · required</text><text x="18" y="159" class="field">assetId · status</text><text x="18" y="186" class="field">returnedAt</text><text x="18" y="220" class="badge">join collection: transaction ↔ asset</text></g>
+  <g transform="translate(1380 115)"><rect class="card" width="360" height="340" rx="13"/><path class="head2" d="M13 0h334a13 13 0 0 1 13 13v37H0V13A13 13 0 0 1 13 0"/><text x="18" y="32" class="entity">ASSET</text>
+    <text x="18" y="78" class="field"><tspan class="key">_id</tspan><tspan> · ObjectId · PK</tspan></text><text x="18" y="105" class="field">assetId · unique</text><text x="18" y="132" class="field">name · type · category</text><text x="18" y="159" class="field">serialNumber · tagId</text><text x="18" y="186" class="field">assetGroup · department</text><text x="18" y="213" class="field">location · floor · responsible</text><text x="18" y="240" class="field">status · purchaseDate · warranty</text><text x="18" y="267" class="field">nextPMDate · repairCount</text><text x="18" y="294" class="field">replacementCost · downtimeMinutes</text><text x="18" y="324" class="badge">timestamps enabled</text></g>
+
+  <!-- Asset history and maintenance -->
+  <g transform="translate(60 475)"><rect class="card" width="420" height="300" rx="13"/><path class="head2" d="M13 0h394a13 13 0 0 1 13 13v37H0V13A13 13 0 0 1 13 0"/><text x="18" y="32" class="entity">MOVEMENT</text>
+    <text x="18" y="78" class="field"><tspan class="key">_id</tspan><tspan> · ObjectId · PK</tspan></text><text x="18" y="105" class="field">asset · ObjectId · FK · required</text><text x="18" y="132" class="field">transactionId · ObjectId · FK · optional</text><text x="18" y="159" class="field">assetId · action · method · actor</text><text x="18" y="186" class="field">from {floor, department, location}</text><text x="18" y="213" class="field">to {floor, department, location}</text><text x="18" y="240" class="field">responsible · reason · status</text><text x="18" y="278" class="badge">timestamps enabled</text></g>
+  <g transform="translate(520 475)"><rect class="card" width="280" height="220" rx="13"/><path class="head2" d="M13 0h254a13 13 0 0 1 13 13v37H0V13A13 13 0 0 1 13 0"/><text x="18" y="32" class="entity">PM</text>
+    <text x="18" y="78" class="field"><tspan class="key">_id</tspan><tspan> · ObjectId · PK</tspan></text><text x="18" y="105" class="field">asset · ObjectId · FK · required</text><text x="18" y="132" class="field">assetId · date · operator</text><text x="18" y="159" class="field">checklist · issues · result</text><text x="18" y="186" class="field">nextPMDate · notes</text></g>
+  <g transform="translate(830 475)"><rect class="card" width="280" height="220" rx="13"/><path class="head2" d="M13 0h254a13 13 0 0 1 13 13v37H0V13A13 13 0 0 1 13 0"/><text x="18" y="32" class="entity">REPAIR</text>
+    <text x="18" y="78" class="field"><tspan class="key">_id</tspan><tspan> · ObjectId · PK</tspan></text><text x="18" y="105" class="field">asset · ObjectId · FK · required</text><text x="18" y="132" class="field">assetId · date · symptom</text><text x="18" y="159" class="field">cause · resolution · cost</text><text x="18" y="186" class="field">operator · status · vendor</text></g>
+  <g transform="translate(1125 475)"><rect class="card" width="390" height="300" rx="13"/><path class="head2" d="M13 0h364a13 13 0 0 1 13 13v37H0V13A13 13 0 0 1 13 0"/><text x="18" y="32" class="entity">WORK_ORDER</text>
+    <text x="18" y="78" class="field"><tspan class="key">_id</tspan><tspan> · ObjectId · PK</tspan></text><text x="18" y="105" class="field">workOrderId · unique</text><text x="18" y="132" class="field">asset · ObjectId · FK · required</text><text x="18" y="159" class="field">assetId · type · title · description</text><text x="18" y="186" class="field">priority · status · dueDate</text><text x="18" y="213" class="field">assignedTo · createdBy · strings</text><text x="18" y="240" class="field">actualCost · resolution</text><text x="18" y="267" class="field">checklist [{task, completed}] · embedded</text><text x="18" y="288" class="badge">timestamps enabled</text></g>
+
+  <!-- Supporting records -->
+  <g transform="translate(1550 520)"><rect class="card" width="200" height="220" rx="13"/><path class="head2" d="M13 0h174a13 13 0 0 1 13 13v37H0V13A13 13 0 0 1 13 0"/><text x="18" y="32" class="entity">AUDIT</text>
+    <text x="18" y="78" class="field"><tspan class="key">_id</tspan><tspan> · ObjectId · PK</tspan></text><text x="18" y="105" class="field">actor · action</text><text x="18" y="132" class="field">assetId · plain string</text><text x="18" y="159" class="field">before · after · Mixed</text><text x="18" y="194" class="badge">timestamps enabled</text></g>
+  <g transform="translate(1550 800)"><rect class="card" width="200" height="140" rx="13"/><path class="head" d="M13 0h174a13 13 0 0 1 13 13v37H0V13A13 13 0 0 1 13 0"/><text x="18" y="32" class="entity">COUNTER</text>
+    <text x="18" y="78" class="field"><tspan class="key">_id</tspan><tspan> · string · PK</tspan></text><text x="18" y="105" class="field">value · number</text><text x="18" y="128" class="badge">no timestamps</text></g>
+
+  <!-- String-keyed catalogs: dashed logical links, not database foreign keys. -->
+  <text x="60" y="855" class="title" style="font-size:21px">String-keyed catalogs · logical matches only</text>
+  <g transform="translate(60 885)"><rect class="card" width="330" height="155" rx="13"/><path class="head" d="M13 0h304a13 13 0 0 1 13 13v37H0V13A13 13 0 0 1 13 0"/><text x="18" y="32" class="entity">ASSET_GROUP</text><text x="18" y="80" class="field"><tspan class="key">_id</tspan><tspan> · ObjectId · PK</tspan></text><text x="18" y="108" class="field">prefix · unique · name</text><text x="18" y="137" class="badge">Asset.assetGroup ↔ prefix</text></g>
+  <g transform="translate(420 885)"><rect class="card" width="330" height="155" rx="13"/><path class="head" d="M13 0h304a13 13 0 0 1 13 13v37H0V13A13 13 0 0 1 13 0"/><text x="18" y="32" class="entity">ASSET_CATEGORY</text><text x="18" y="80" class="field"><tspan class="key">_id</tspan><tspan> · ObjectId · PK</tspan></text><text x="18" y="108" class="field">name · unique</text><text x="18" y="137" class="badge">Asset.category ↔ name</text></g>
+  <g transform="translate(780 885)"><rect class="card" width="330" height="155" rx="13"/><path class="head" d="M13 0h304a13 13 0 0 1 13 13v37H0V13A13 13 0 0 1 13 0"/><text x="18" y="32" class="entity">DEPARTMENT</text><text x="18" y="80" class="field"><tspan class="key">_id</tspan><tspan> · ObjectId · PK</tspan></text><text x="18" y="108" class="field">name · unique</text><text x="18" y="137" class="badge">Asset / User.department ↔ name</text></g>
+  <g transform="translate(1140 885)"><rect class="card" width="360" height="155" rx="13"/><path class="head" d="M13 0h334a13 13 0 0 1 13 13v37H0V13A13 13 0 0 1 13 0"/><text x="18" y="32" class="entity">LOCATION</text><text x="18" y="80" class="field"><tspan class="key">_id</tspan><tspan> · ObjectId · PK</tspan></text><text x="18" y="108" class="field">name · building · floor · department</text><text x="18" y="137" class="badge">Asset.location ↔ name · string match</text></g>
+
+  <rect x="60" y="1120" width="1680" height="115" rx="14" fill="#e8f1f6" stroke="#d2e1e9"/>
+  <text x="84" y="1155" class="entity" style="fill:#174456">Reading the model</text>
+  <text x="84" y="1185" class="subtitle">ObjectId links are required unless labeled optional. Audit.assetId, catalog matches, and assignment names are strings, not enforced foreign keys.</text>
+  <text x="84" y="1212" class="subtitle">Most collections use createdAt / updatedAt timestamps. Counter is string-keyed and has no timestamps. Embedded checklists are not separate entities.</text>
+</svg>
