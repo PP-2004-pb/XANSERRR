@@ -12,7 +12,7 @@ import {
 const apiRequest = async (path, options = {}) => {
   const token = localStorage.getItem("itam-token");
   const r = await fetch(
-    (import.meta.env.VITE_API_URL || "http://127.0.0.1:4000/api") + path,
+    (import.meta.env.VITE_API_URL || (import.meta.env.DEV ? "http://127.0.0.1:4000/api" : "/api")) + path,
     {
       ...options,
       headers: {

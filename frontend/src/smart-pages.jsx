@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from 'react';
 import {BarChart,Bar,XAxis,YAxis,Tooltip,ResponsiveContainer,AreaChart,Area} from 'recharts';
 import {QRCodeSVG} from 'qrcode.react';
-const API=import.meta.env.VITE_API_URL||'http://127.0.0.1:4000/api';
+const API=import.meta.env.VITE_API_URL||(import.meta.env.DEV?'http://127.0.0.1:4000/api':'/api');
 export async function api(path,options={}){const response=await fetch(API+path,{...options,headers:{'Content-Type':'application/json',Authorization:`Bearer ${localStorage.getItem('itam-token')}`}});const data=await response.json().catch(()=>({}));if(!response.ok)throw Error(data.error||'Request failed');return data}
 const fmt=value=>value?new Date(value).toLocaleString('th-TH'):'—';
 const defaults={Available:'Ready for use',Borrowed:'Waiting for return','In Use':'Continue assigned use',Repair:'Waiting for vendor / repair completion',Retired:'Dispose / decommission'};

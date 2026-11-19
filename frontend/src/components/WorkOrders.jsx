@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Check, ClipboardList, Pause, Play, Plus } from "lucide-react";
 
-const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:4000/api";
+const API = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? "http://127.0.0.1:4000/api" : "/api");
 const types = ["PM", "REPAIR", "WARRANTY", "INSPECTION"];
 const priorities = ["Low", "Medium", "High", "Critical"];
 const statusLabels = {

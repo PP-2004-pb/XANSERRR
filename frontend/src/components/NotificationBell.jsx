@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Bell, RefreshCw } from "lucide-react";
 
-const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:4000/api";
+const API = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? "http://127.0.0.1:4000/api" : "/api");
 const labels = {
   pm: "Preventive maintenance",
   warranty: "Warranty",

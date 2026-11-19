@@ -17,7 +17,7 @@ const CatalogManager=lazyNamed(()=>import('./smart-pages-ready.jsx'),'CatalogMan
 const AuditPage=lazyNamed(()=>import('./smart-pages-ready.jsx'),'AuditPage');
 const AssetDetail=lazyNamed(()=>import('./smart-pages-ready.jsx'),'AssetDetail');
 const WorkOrders=lazyNamed(()=>import('./components/WorkOrders.jsx'),'default');
-const API=import.meta.env.VITE_API_URL||'http://127.0.0.1:4000/api';
+const API=import.meta.env.VITE_API_URL||(import.meta.env.DEV?'http://127.0.0.1:4000/api':'/api');
 if(import.meta.env.VITE_PUBLIC_DEMO==='true'){
  localStorage.setItem('itam-token','public-demo-viewer');
  document.documentElement.dataset.publicDemo='true';

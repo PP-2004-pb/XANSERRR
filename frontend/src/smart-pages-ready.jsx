@@ -10,7 +10,7 @@ import {
 import { Download, FileUp } from "lucide-react";
 import Papa from "papaparse";
 import { QRCodeSVG } from "qrcode.react";
-const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:4000/api";
+const API = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? "http://127.0.0.1:4000/api" : "/api");
 export async function api(path, options = {}) {
   const r = await fetch(API + path, {
       ...options,
